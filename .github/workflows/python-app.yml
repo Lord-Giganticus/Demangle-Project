@@ -30,8 +30,7 @@ jobs:
           Invoke-WebRequest -Uri "https://github.com/RealTheSunCat/CodeWarriorDemangler/releases/latest/download/CWD.jar" -OutFile CWD.jar
           Invoke-WebRequest -Uri "https://github.com/Lord-Giganticus/Syati/raw/main/symbols/${{matrix.region}}.txt" -OutFile ${{matrix.region}}.txt
     - shell: cmd
-      run: |
-          for /F "tokens=*" %%A in (${{matrix.region}}.txt) do java -jar CWD.jar "%%A" >> ${{matrix.region}}_demangled.txt
+      run: python demangle.py ${{matrix.region}}.txt
     - uses: actions/upload-artifact@v3.0.0
       with:
         name: ${{matrix.region}}
