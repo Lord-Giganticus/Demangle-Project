@@ -1,4 +1,4 @@
-name: Python application
+name: CI
 
 on:
   push:
@@ -21,17 +21,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.10"
     - shell: pwsh
       run: |
-          Invoke-WebRequest -Uri "https://github.com/RealTheSunCat/CodeWarriorDemangler/releases/latest/download/CWD.jar" -OutFile CWD.jar
+          Invoke-WebRequest -Uri "https://github.com/Lord-Giganticus/CodeWarriorDemangler/releases/latest/download/CWD.jar" -OutFile CWD.jar
           Invoke-WebRequest -Uri "https://github.com/Lord-Giganticus/Syati/raw/main/symbols/${{matrix.region}}.txt" -OutFile ${{matrix.region}}.txt
     - shell: cmd
-      run: python demangle.py ${{matrix.region}}.txt
+      run: java -jar cwd.jar ${{matrix.region}}.txt > demangled_${{matrix.region}}.txt
     - uses: actions/upload-artifact@v3.0.0
       with:
         name: ${{matrix.region}}
-        path: ${{matrix.region}}.txt
+        path: demangled_${{matrix.region}}.txt
