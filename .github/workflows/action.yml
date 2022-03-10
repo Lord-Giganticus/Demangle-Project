@@ -37,7 +37,7 @@ jobs:
         path: demangled_${{matrix.region}}.txt
 
   publish:
-
+    needs: build
     runs-on: windows-latest
     
     steps:
