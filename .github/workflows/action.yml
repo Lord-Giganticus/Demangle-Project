@@ -35,3 +35,34 @@ jobs:
       with:
         name: ${{matrix.region}}
         path: demangled_${{matrix.region}}.txt
+
+  publish:
+
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/download-artifact@v3.0.0
+      with: 
+        name: USA
+    - uses: actions/download-artifact@v3.0.0
+      with: 
+        name: TWN
+    - uses: actions/download-artifact@v3.0.0
+      with: 
+        name: PAL
+    - uses: actions/download-artifact@v3.0.0
+      with: 
+        name: KOR
+    - uses: actions/download-artifact@v3.0.0
+      with: 
+        name: PAL
+    - shell: cmd
+      run: 7z a ${{github.workspace}}\Demangled.zip *.txt -r
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "Auto"
+        prerelease: true
+        title: "Auto Build"
+        files: |
+            *.zip
