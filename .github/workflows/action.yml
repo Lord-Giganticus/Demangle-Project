@@ -52,10 +52,10 @@ jobs:
         name: PAL
     - uses: actions/download-artifact@v3.0.0
       with: 
-        name: KOR
+        name: JAP
     - uses: actions/download-artifact@v3.0.0
       with: 
-        name: PAL
+        name: KOR
     - shell: cmd
       run: 7z a ${{github.workspace}}\Demangled.zip *.txt -r
     - uses: "marvinpinto/action-automatic-releases@latest"
