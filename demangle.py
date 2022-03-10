@@ -1,13 +1,19 @@
 import sys
-from cwfilt import *
+import subprocess
+from os import path
 
-if __name__ == "__main__":
-    with open(sys.argv[1]) as fp:
-        symbols = fp.read().splitlines()
-    with open("demangled_"+sys.argv[1], "a") as newFile:
-        for symbol in symbols:
-            symbolp = symbol.split('=')
-            try:
-                newFile.write(demangle(symbolp[0]) + '=' + symbolp[1]+"\n")
-            except:
-                pass
+with open(sys.argv[1], "r") as f:
+    lines = f.readlines()
+
+dir = path.dirname(sys.argv[0])
+name = f"demangld_{path.basename(sys.argv[0])}"
+
+with open(f"{dir}\\{name}", "w") as w:
+    for line in lines:
+        symbol = line.split("=")[0]
+        address = line.split("=")[1]
+        process = subprocess.run(f"java -jar CWD.jar \"{symbol}\"", capture_output=True)
+        if process.returncode == 0:
+            symbol = process.stdout.decode("UTF-8")
+            symbol = symbol.strip()
+            w.write(f"{symbol}={address}")
