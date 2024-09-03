@@ -41,19 +41,19 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/download-artifact@v3.0.0
+    - uses: actions/download-artifact@v4.1.7
       with: 
         name: USA
-    - uses: actions/download-artifact@v3.0.0
+    - uses: actions/download-artifact@v4.1.7
       with: 
         name: TWN
-    - uses: actions/download-artifact@v3.0.0
+    - uses: actions/download-artifact@v4.1.7
       with: 
         name: PAL
-    - uses: actions/download-artifact@v3.0.0
+    - uses: actions/download-artifact@v4.1.7
       with: 
         name: JAP
-    - uses: actions/download-artifact@v3.0.0
+    - uses: actions/download-artifact@v4.1.7
       with: 
         name: KOR
     - shell: cmd
